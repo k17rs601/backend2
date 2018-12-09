@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">    <meta http-equiv="Content-Security-Policy" content="default-src * data: gap: content: https://ssl.gstatic.com; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  <script src="components/loader.js"></script>
+  <link rel="stylesheet" href="components/loader.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="keys.js"></script>
+  <script>
+    var ncmb = new NCMB(appKey, clientKey);
+    var UTdata = ncmb.DataStore("UpdateTest");
+    var key = "message";
+
+    function enterData() {
+      var uTdata = new UTdata();
+      var value = parseInt($("#data").val());
+      uTdata.set(key, value)
+      .save()
+      .then(function(results){
+        $("#display").removeClass();
+        $("#display").addClass("bg-success");
+        $("#display").html("enter success");
+      })
+      .catch(function(results){
+        $("#display").removeClass();
+        $("#display").addClass("bg-warning");
+        $("#display").html("enter fail");
+      })
+    }
+
+    function fetchAll() {
+      UTdata.fetchAll()
+      .then(function(results){
+        var msg="";
+        for(var i=0; i<results.length; i++){
+          msg += results[i].get(key) + "<br>";
+        }
+        $("#display").removeClass();
+        $("#display").addClass("text-light");
+        $("#display").addClass("bg-primary");
+        $("#display").html(msg);
+      })
+      .catch(function(error){
+        $("#display").removeClass();
+        $("#display").addClass("bg-warning");
+        $("#display").html("delete fail:" + JSON.stringify(error));
+      })
+    }
+
+    function deleteData() {
+    }
+
+    function updateData() {
+    }
+
+    function sortData() {
+    }
+
+    function countData() {
+    }
+  </script>
+</head>
+<body>
+  <h1>backend test 2</h1>
+  <div>
+    <input type="text" id="data" placeholder="スコア"> 
+    <a onclick="enterData()" class="btn btn-outline-secondary" role="button">Enter</a>
+  </div>
+  <div>
+    <a onclick="fetchAll()" class="btn btn-outline-secondary" role="buton">Fetch All</a>
+    <a onclick="deleteData()" class="btn btn-outline-primary" role="buton">Delete</a>
+    <a onclick="countData()" class="btn btn-outline-primary" role="button">Count</a>
+    <a onclick="sortData()" class="btn btn-outline-primary" role="button">Sort</a>
+  </div>
+  <div>
+    <input type="text" id="update" placeholder="更新">
+    <a onclick="updateData()" class="btn btn-outline-primary" role="button">Update</a>
+  </div>
+  <div id="display" class="text-light bg-info">
+    Results
+  </div>
+</body>
+</html>
