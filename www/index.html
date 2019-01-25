@@ -9,12 +9,42 @@
   <script src="keys.js"></script>
   <script>
     var ncmb = new NCMB(appKey, clientKey);
-    var UTdata = ncmb.DataStore("UpdateTest");
+    var dataA = ncmb.DataStore("saikoroA");
+    var dataB = ncmb.DataStore("saikoroB");
     var key = "message";
+    var random;
+
+
+
+
+    function throwenter() {
+      random = Math.floor(Math.random()*6+1);
+      $("#throwtext").html(random);
+      var uTdata = new dataA();
+      var value = random;
+      uTdata.set(key, value)
+      .save()
+      .then(function(results){
+        $("#display").removeClass();
+        $("#display").addClass("bg-success");
+        $("#display").html("enter success");
+      })
+      .catch(function(results){
+        $("#display").removeClass();
+        $("#display").addClass("bg-warning");
+        $("#display").html("enter fail");
+      })
+    }
+
+    function throwS() {
+      random = Math.floor(Math.random()*6+1);
+      $("#throwtext").html(random);
+    }
 
     function enterData() {
-      var uTdata = new UTdata();
-      var value = parseInt($("#data").val());
+      var uTdata = new dataA();
+      var value = random;
+      //var value = parseInt($("#throwtext").val());
       uTdata.set(key, value)
       .save()
       .then(function(results){
@@ -30,7 +60,7 @@
     }
 
     function fetchAll() {
-      UTdata.fetchAll()
+      dataA.fetchAll()
       .then(function(results){
         var msg="";
         for(var i=0; i<results.length; i++){
@@ -49,7 +79,7 @@
     }
 
     function deleteData() {
-      UTdata.fetch()
+      dataA.fetch()
       .then(function(uTdata){
         return uTdata.delete();
 
@@ -66,7 +96,35 @@
       })
     }
 
-    function updateData() {
+    function countData() {
+      dataA.count().fetchAll()
+      .then(function(results){
+        $("#display").removeClass();
+        $("#display").addClass("bg-sccess");
+        $("#display").html(results.count);
+      })
+      .catch(function(error){
+        $("#display").removeClass();
+        $("#display").addClass("bg-warning");
+        $("#display").html("count fail:" + JSON.stringify(error));
+      })            
+    }
+
+    /*function deleteAll(){
+
+    }*/
+
+    /*function avarage(){
+
+    }*/
+
+  /*function varMax(){
+
+  }*/
+
+
+
+    /*function updattData() {
       UTdata.fetch()
       .then(function(uTdata){
         var value = parseInt($("#update").val());
@@ -84,44 +142,31 @@
         $("#display").addClass("bg-warning");
         $("#display").html("update fail:" + JSON.stringify(error));
       })
-    }
+    }*/
 
-    function countData() {
-      UTdata.count().fetchAll()
-      .then(function(results){
-        $("#display").removeClass();
-        $("#display").addClass("bg-sccess");
-        $("#display").html(results.count);
-      })
-      .catch(function(error){
-        $("#display").removeClass();
-        $("#display").addClass("bg-warning");
-        $("#display").html("count fail:" + JSON.stringify(error));
-      })            
-    }
+ // <div id="throwtext" class="text-light bg-info">
+ // <div id = "throwtext" >0</div>
 
-    function sortData() {
-    }
   </script>
 </head>
 <body>
-  <h1>backend test 2</h1>
+  <div id="message1">☆サイコロツール☆</div>
+  <div id="throwtext" class="text-light bg-info">0</div>
   <div>
-    <input type="text" id="data" placeholder="スコア"> 
-    <a onclick="enterData()" class="btn btn-outline-secondary" role="button">Enter</a>
+    <a onclick="throwenter()" class="btn btn-outline-secondary" role="button">サイコロを振る＋数値を送信</a>
+    <a onclick="throwS()" class="btn btn-outline-secondary" role="button">サイコロを振る</a>
+    <a onclick="enterData()" class="btn btn-outline-secondary" role="button">表示中の数値を送信</a>
+    
   </div>
+  <hr></hr>
   <div>
-    <a onclick="fetchAll()" class="btn btn-outline-secondary" role="buton">Fetch All</a>
-    <a onclick="deleteData()" class="btn btn-outline-primary" role="buton">Delete</a>
-    <a onclick="countData()" class="btn btn-outline-primary" role="button">Count</a>
-    <a onclick="sortData()" class="btn btn-outline-primary" role="button">Sort</a>
-  </div>
-  <div>
-    <input type="text" id="update" placeholder="更新">
-    <a onclick="updateData()" class="btn btn-outline-primary" role="button">Update</a>
+    <a onclick="fetchAll()" class="btn btn-outline-secondary" role="buton">全表示</a>
+    <a onclick="deleteData()" class="btn btn-outline-primary" role="buton">１つ削除</a>
+    <a onclick="countData()" class="btn btn-outline-primary" role="button">カウント</a>
   </div>
   <div id="display" class="text-light bg-info">
-    Results
+    結果
   </div>
+  <div>
 </body>
 </html>

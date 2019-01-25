@@ -1,2 +1,16 @@
 /**/
+ #message1{
+   font-size:40px;
+   color:#FF0000;
+   test-align:center;
+ }
+
+ #throwtext{
+   font-size:50px;
+   text-align:center;
+ }
+
+ #sen{
+   color:black;
+ }
 
