@@ -1,5 +1,10 @@
 /**/
+body{
+  background-color:rgb(255, 255, 255);
+}
+
  #message1{
+   background-color:rgb(241, 243, 112);
    font-size:40px;
    color:#FF0000;
    test-align:center;
@@ -7,7 +12,10 @@
 
  #throwtext{
    font-size:50px;
+   font-weight:bold;
+   color:rgb(113, 4, 197);
    text-align:center;
+   border:2px black;
  }
 
  #sen{
